@@ -6,8 +6,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController
 {
-    public function index()
+    /**
+     * @Route("/", name="accueil")
+     */ 
+    public function accueil()
     {
-        return new Response('Hello world!');
+        return $this->render('accueil.html.twig');
     }
 }
