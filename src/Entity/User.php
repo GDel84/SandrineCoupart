@@ -21,31 +21,28 @@ class User
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $Prenom = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $email = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $Email = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $telephone = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $telephone = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $PassWord = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $PassWord = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Role = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $Role = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Regimes = null;
+    #[ORM\ManyToMany(targetEntity: Regime::class, inversedBy: 'users')]
+    private Collection $IdRegime;
 
-    #[ORM\ManyToMany(targetEntity: RegimesUsers::class, mappedBy: 'User')]
-    private Collection $regimesUsers;
-
-    #[ORM\ManyToMany(targetEntity: UserIngredients::class, mappedBy: 'User')]
-    private Collection $userIngredients;
+    #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'users')]
+    private Collection $IdIngredient;
 
     public function __construct()
     {
-        $this->regimesUsers = new ArrayCollection();
-        $this->userIngredients = new ArrayCollection();
+        $this->IdRegime = new ArrayCollection();
+        $this->IdIngredient = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -77,116 +74,98 @@ class User
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getEmail(): ?int
     {
-        return $this->email;
+        return $this->Email;
     }
 
-    public function setEmail(?string $email): self
+    public function setEmail(?int $Email): self
     {
-        $this->email = $email;
+        $this->Email = $Email;
 
         return $this;
     }
 
-    public function getTelephone(): ?string
+    public function getTelephone(): ?int
     {
         return $this->telephone;
     }
 
-    public function setTelephone(string $telephone): self
+    public function setTelephone(?int $telephone): self
     {
         $this->telephone = $telephone;
 
         return $this;
     }
 
-    public function getPassWord(): ?string
+    public function getPassWord(): ?int
     {
         return $this->PassWord;
     }
 
-    public function setPassWord(?string $PassWord): self
+    public function setPassWord(?int $PassWord): self
     {
         $this->PassWord = $PassWord;
 
         return $this;
     }
 
-    public function getRole(): ?string
+    public function getRole(): ?int
     {
         return $this->Role;
     }
 
-    public function setRole(?string $Role): self
+    public function setRole(?int $Role): self
     {
         $this->Role = $Role;
 
         return $this;
     }
 
-    public function getRegimes(): ?string
+    /**
+     * @return Collection<int, Regime>
+     */
+    public function getIdRegime(): Collection
     {
-        return $this->Regimes;
+        return $this->IdRegime;
     }
 
-    public function setRegimes(?string $Regimes): self
+    public function addIdRegime(Regime $idRegime): self
     {
-        $this->Regimes = $Regimes;
+        if (!$this->IdRegime->contains($idRegime)) {
+            $this->IdRegime->add($idRegime);
+        }
+
+        return $this;
+    }
+
+    public function removeIdRegime(Regime $idRegime): self
+    {
+        $this->IdRegime->removeElement($idRegime);
 
         return $this;
     }
 
     /**
-     * @return Collection<int, RegimesUsers>
+     * @return Collection<int, Ingredient>
      */
-    public function getRegimesUsers(): Collection
+    public function getIdIngredient(): Collection
     {
-        return $this->regimesUsers;
+        return $this->IdIngredient;
     }
 
-    public function addRegimesUser(RegimesUsers $regimesUser): self
+    public function addIdIngredient(Ingredient $idIngredient): self
     {
-        if (!$this->regimesUsers->contains($regimesUser)) {
-            $this->regimesUsers->add($regimesUser);
-            $regimesUser->addUser($this);
+        if (!$this->IdIngredient->contains($idIngredient)) {
+            $this->IdIngredient->add($idIngredient);
         }
 
         return $this;
     }
 
-    public function removeRegimesUser(RegimesUsers $regimesUser): self
+    public function removeIdIngredient(Ingredient $idIngredient): self
     {
-        if ($this->regimesUsers->removeElement($regimesUser)) {
-            $regimesUser->removeUser($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, UserIngredients>
-     */
-    public function getUserIngredients(): Collection
-    {
-        return $this->userIngredients;
-    }
-
-    public function addUserIngredient(UserIngredients $userIngredient): self
-    {
-        if (!$this->userIngredients->contains($userIngredient)) {
-            $this->userIngredients->add($userIngredient);
-            $userIngredient->addUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserIngredient(UserIngredients $userIngredient): self
-    {
-        if ($this->userIngredients->removeElement($userIngredient)) {
-            $userIngredient->removeUser($this);
-        }
+        $this->IdIngredient->removeElement($idIngredient);
 
         return $this;
     }

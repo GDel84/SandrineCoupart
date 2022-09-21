@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\RegimesUsers;
+use App\Entity\Regime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<RegimesUsers>
+ * @extends ServiceEntityRepository<Regime>
  *
- * @method RegimesUsers|null find($id, $lockMode = null, $lockVersion = null)
- * @method RegimesUsers|null findOneBy(array $criteria, array $orderBy = null)
- * @method RegimesUsers[]    findAll()
- * @method RegimesUsers[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Regime|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Regime|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Regime[]    findAll()
+ * @method Regime[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class RegimesUsersRepository extends ServiceEntityRepository
+class RegimeRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, RegimesUsers::class);
+        parent::__construct($registry, Regime::class);
     }
 
-    public function add(RegimesUsers $entity, bool $flush = false): void
+    public function add(Regime $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class RegimesUsersRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(RegimesUsers $entity, bool $flush = false): void
+    public function remove(Regime $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class RegimesUsersRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return RegimesUsers[] Returns an array of RegimesUsers objects
+//     * @return Regime[] Returns an array of Regime objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class RegimesUsersRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?RegimesUsers
+//    public function findOneBySomeField($value): ?Regime
 //    {
 //        return $this->createQueryBuilder('r')
 //            ->andWhere('r.exampleField = :val')

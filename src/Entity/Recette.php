@@ -17,39 +17,34 @@ class Recette
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Titre = null;
+    private ?string $Title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $Description = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $Tpsprepa = null;
+    private ?\DateTimeInterface $TpsPrepa = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $TpsRepos = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $Tpscuisson = null;
+    private ?\DateTimeInterface $TpsCuisson = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Allergene = null;
+    #[ORM\ManyToMany(targetEntity: Regime::class, inversedBy: 'recettes')]
+    private Collection $IdRegime;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Regime = null;
+    #[ORM\ManyToMany(targetEntity: Etape::class, inversedBy: 'recettes')]
+    private Collection $IdEtape;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $abonne = null;
-
-    #[ORM\ManyToMany(targetEntity: IngredientsRecette::class, mappedBy: 'Recette')]
-    private Collection $ingredientsRecettes;
-
-    #[ORM\ManyToMany(targetEntity: RegimesRecettes::class, mappedBy: 'Recette')]
-    private Collection $regimesRecettes;
+    #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'recettes')]
+    private Collection $IdIngredients;
 
     public function __construct()
     {
-        $this->ingredientsRecettes = new ArrayCollection();
-        $this->regimesRecettes = new ArrayCollection();
+        $this->IdRegime = new ArrayCollection();
+        $this->IdEtape = new ArrayCollection();
+        $this->IdIngredients = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -57,14 +52,14 @@ class Recette
         return $this->id;
     }
 
-    public function getTitre(): ?string
+    public function getTitle(): ?string
     {
-        return $this->Titre;
+        return $this->Title;
     }
 
-    public function setTitre(?string $Titre): self
+    public function setTitle(?string $Title): self
     {
-        $this->Titre = $Titre;
+        $this->Title = $Title;
 
         return $this;
     }
@@ -81,14 +76,14 @@ class Recette
         return $this;
     }
 
-    public function getTpsprepa(): ?\DateTimeInterface
+    public function getTpsPrepa(): ?\DateTimeInterface
     {
-        return $this->Tpsprepa;
+        return $this->TpsPrepa;
     }
 
-    public function setTpsprepa(?\DateTimeInterface $Tpsprepa): self
+    public function setTpsPrepa(?\DateTimeInterface $TpsPrepa): self
     {
-        $this->Tpsprepa = $Tpsprepa;
+        $this->TpsPrepa = $TpsPrepa;
 
         return $this;
     }
@@ -105,104 +100,86 @@ class Recette
         return $this;
     }
 
-    public function getTpscuisson(): ?\DateTimeInterface
+    public function getTpsCuisson(): ?\DateTimeInterface
     {
-        return $this->Tpscuisson;
+        return $this->TpsCuisson;
     }
 
-    public function setTpscuisson(?\DateTimeInterface $Tpscuisson): self
+    public function setTpsCuisson(?\DateTimeInterface $TpsCuisson): self
     {
-        $this->Tpscuisson = $Tpscuisson;
-
-        return $this;
-    }
-
-    public function getAllergene(): ?string
-    {
-        return $this->Allergene;
-    }
-
-    public function setAllergene(?string $Allergene): self
-    {
-        $this->Allergene = $Allergene;
-
-        return $this;
-    }
-
-    public function getRegime(): ?string
-    {
-        return $this->Regime;
-    }
-
-    public function setRegime(?string $Regime): self
-    {
-        $this->Regime = $Regime;
-
-        return $this;
-    }
-
-    public function isAbonne(): ?bool
-    {
-        return $this->abonne;
-    }
-
-    public function setAbonne(?bool $abonne): self
-    {
-        $this->abonne = $abonne;
+        $this->TpsCuisson = $TpsCuisson;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, IngredientsRecette>
+     * @return Collection<int, Regime>
      */
-    public function getIngredientsRecettes(): Collection
+    public function getIdRegime(): Collection
     {
-        return $this->ingredientsRecettes;
+        return $this->IdRegime;
     }
 
-    public function addIngredientsRecette(IngredientsRecette $ingredientsRecette): self
+    public function addIdRegime(Regime $idRegime): self
     {
-        if (!$this->ingredientsRecettes->contains($ingredientsRecette)) {
-            $this->ingredientsRecettes->add($ingredientsRecette);
-            $ingredientsRecette->addRecette($this);
+        if (!$this->IdRegime->contains($idRegime)) {
+            $this->IdRegime->add($idRegime);
         }
 
         return $this;
     }
 
-    public function removeIngredientsRecette(IngredientsRecette $ingredientsRecette): self
+    public function removeIdRegime(Regime $idRegime): self
     {
-        if ($this->ingredientsRecettes->removeElement($ingredientsRecette)) {
-            $ingredientsRecette->removeRecette($this);
-        }
+        $this->IdRegime->removeElement($idRegime);
 
         return $this;
     }
 
     /**
-     * @return Collection<int, RegimesRecettes>
+     * @return Collection<int, Etape>
      */
-    public function getRegimesRecettes(): Collection
+    public function getIdEtape(): Collection
     {
-        return $this->regimesRecettes;
+        return $this->IdEtape;
     }
 
-    public function addRegimesRecette(RegimesRecettes $regimesRecette): self
+    public function addIdEtape(Etape $idEtape): self
     {
-        if (!$this->regimesRecettes->contains($regimesRecette)) {
-            $this->regimesRecettes->add($regimesRecette);
-            $regimesRecette->addRecette($this);
+        if (!$this->IdEtape->contains($idEtape)) {
+            $this->IdEtape->add($idEtape);
         }
 
         return $this;
     }
 
-    public function removeRegimesRecette(RegimesRecettes $regimesRecette): self
+    public function removeIdEtape(Etape $idEtape): self
     {
-        if ($this->regimesRecettes->removeElement($regimesRecette)) {
-            $regimesRecette->removeRecette($this);
+        $this->IdEtape->removeElement($idEtape);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Ingredient>
+     */
+    public function getIdIngredients(): Collection
+    {
+        return $this->IdIngredients;
+    }
+
+    public function addIdIngredient(Ingredient $idIngredient): self
+    {
+        if (!$this->IdIngredients->contains($idIngredient)) {
+            $this->IdIngredients->add($idIngredient);
         }
+
+        return $this;
+    }
+
+    public function removeIdIngredient(Ingredient $idIngredient): self
+    {
+        $this->IdIngredients->removeElement($idIngredient);
 
         return $this;
     }
