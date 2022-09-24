@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RegimeController extends AbstractController
 {
-    #[Route('/regime', name: 'admin_regime')]
+    #[Route('/admin/regime', name: 'admin_regime')]
     public function regime(): Response
     {
         return $this->render('admin/regime/Admin-regimehtml.twig', [

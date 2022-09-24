@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Sandrine Coupart{% endblock %}</title>
+        <link rel="icon" type="image/png" sizes="16x16" href="">
+        <script src="https://kit.fontawesome.com/27b7c32fb0.js" crossorigin="anonymous"></script>
+    
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+            <link rel="stylesheet" href="{{ asset('css/adminstyle.css')}}">
+        {% endblock %}
+        
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+                <script src="{{ asset('JS/app.js')}}"></script>
+        {% endblock %}
+    </head>
+
+<body>
+<!-- Navigation -->
+<div class="navtotal">
+<h2>Partie admin</h2>
+    
+      <!-- Links in Div -->
+      <a href="/admin/accueil" class="nav">
+        Accueil
+      </a>
+      <a href="/admin/recette" class="nav">
+        Recette
+      </a>
+      <a href="/adminprof" class="nav">
+        Profs
+      </a>
+      <a href="/admincontact" class="nav">
+        Contact
+      </a>
+      <a href="/abonne" class="nav">
+        Abonné
+      </a>
+    </div>
+
+<!-- Contenu de la page -->
