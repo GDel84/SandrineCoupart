@@ -20,7 +20,26 @@
           <a href= "">Recette</a>
           <a href="">mention legale</a>
           <a href="">contact</a>
-          <a href="{{ path('app_login') }}">login</a>
+          {% if app.user %}
+        <div>
+        <li class="menu-deroulant">
+          <a>Mon profil</a>
+            <ul class="sous-menu">
+               <li><a class="sous-menu-cache" href="{{ path('app_user') }}">Mon profil</a></li>
+               <li><a class="sous-menu-cache" href="{{ path('app_logout') }}">Déconnexion</a></li>
+            </ul>
+        </li>
+        </div>
+      {% else %}
+          <div>
+          <li class="menu-deroulant">
+          <a>Se connecter</a>
+          <ul class="sous-menu">
+                <li><a class="sous-menu-cache"  href="{{ path('app_login') }}">Se connecter</a></li>
+              </ul>
+             
+          </div>
+    {% endif %}
         </div>
     </div>
     {% if is_granted('ROLE_ADMIN') %}

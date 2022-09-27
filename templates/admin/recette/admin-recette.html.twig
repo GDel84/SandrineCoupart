@@ -1,5 +1,40 @@
-{% extends 'baseadmin.html.twig' %}
+{% extends '/admin/baseadmin.html.twig' %}
 
 {% block body %}
+<h1> modifier recette</h1>
+{% for recette in recettes %}
+
+<a href="{{ path("admin_recette_create", {id:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-modifier-la-propriété-48.png"></a>
+
+<div class="deco">
+<table  class="t1 t2">        
+        <thead> 
+            <tr>
+            <th >Title</th>
+            <th>description</th>
+            <th>TpsPrepa</th>
+            <th>TpsPrepa</th>
+            <th>TpsCuisson</th>
+            <th>Modifer</th>
+            </tr> 
+        </thead>
+        <tbody> 
+        <tr>
+            <td >{{recette.title}}</td>
+            <td>{{recette.Description}}</td>
+            <td>{{recette.TpsPrepa}}</td>
+            <td>{{recette.TpsRepos}}</td>
+            <td>{{recette.TpsCuisson}}</td>
+            <td><a href="{{ path("admin_recette_edit", {id:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-modifier-la-propriété-48.png"></a>
+        </td>
+        </tr>
+        </tbody> 
+
+<div class="btn">
+
+</div>
+
+{% endfor %}
+
 
 {% endblock %} 

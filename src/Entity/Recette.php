@@ -19,6 +19,9 @@ class Recette
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $Title = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photo = null;
+
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $Description = null;
 
@@ -40,6 +43,7 @@ class Recette
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'recettes')]
     private Collection $IdIngredients;
 
+
     public function __construct()
     {
         $this->IdRegime = new ArrayCollection();
@@ -60,6 +64,18 @@ class Recette
     public function setTitle(?string $Title): self
     {
         $this->Title = $Title;
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): self
+    {
+        $this->photo = $photo;
 
         return $this;
     }
@@ -183,4 +199,6 @@ class Recette
 
         return $this;
     }
+
+
 }
