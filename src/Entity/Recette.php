@@ -43,6 +43,9 @@ class Recette
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'recettes')]
     private Collection $IdIngredients;
 
+    #[ORM\ManyToOne(inversedBy: 'IdRecette')]
+    private ?IngredientRecette $ingredientRecette = null;
+
 
     public function __construct()
     {
@@ -203,5 +206,17 @@ class Recette
     public function __toString()
     {
         return $this->getTitle();
+    }
+
+    public function getIngredientRecette(): ?IngredientRecette
+    {
+        return $this->ingredientRecette;
+    }
+
+    public function setIngredientRecette(?IngredientRecette $ingredientRecette): self
+    {
+        $this->ingredientRecette = $ingredientRecette;
+
+        return $this;
     }
 }

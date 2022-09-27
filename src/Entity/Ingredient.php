@@ -27,6 +27,9 @@ class Ingredient
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'IdIngredient')]
     private Collection $users;
 
+    #[ORM\ManyToOne(inversedBy: 'IdIngredient')]
+    private ?IngredientRecette $ingredientRecette = null;
+
     public function __construct()
     {
         $this->recettes = new ArrayCollection();
@@ -119,5 +122,17 @@ class Ingredient
     public function __toString()
     {
         return $this->getLibeller();
+    }
+
+    public function getIngredientRecette(): ?IngredientRecette
+    {
+        return $this->ingredientRecette;
+    }
+
+    public function setIngredientRecette(?IngredientRecette $ingredientRecette): self
+    {
+        $this->ingredientRecette = $ingredientRecette;
+
+        return $this;
     }
 }
