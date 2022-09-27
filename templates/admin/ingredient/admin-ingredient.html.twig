@@ -11,16 +11,14 @@
         <thead> 
             <tr>
             <th >Libeller</th>
-            <th>recettes</th>
-            <th>users</th>
+            <th>Allergene</th>
             <th>Modifer</th>
             </tr> 
         </thead>
         <tbody> 
         <tr>
             <td >{{ingredient.Libeller}}</td>
-            <td>{{ingredient.recettes}}</td>
-            <td>{{ingredient.users}}</td>
+            <td >{{ingredient.Allergene}}</td>
             <td><a href="{{ path("admin_ingredient_edit", {id:ingredient.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-modifier-la-propriété-48.png"></a>
         </td>
         </tr>
