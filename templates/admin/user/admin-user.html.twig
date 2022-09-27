@@ -1,20 +1,41 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Hello UserController!{% endblock %}
+{% extends '/admin/baseadmin.html.twig' %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<h1> modifier user</h1>
+{% for user in users %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<a href="{{ path("admin_user_create", {id:user.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-modifier-la-propriété-48.png"></a>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/SandrineCoupart/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/SandrineCoupart/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
-    </ul>
+<div class="deco">
+<table  class="t1 t2">        
+        <thead> 
+            <tr>
+            <th >Nom</th>
+            <th >Prenom</th>
+            <th >telephone</th>
+            <th >email</th>
+            <th >roles</th>
+            <th >modifer</th>
+            </tr> 
+        </thead>
+        <tbody> 
+        <tr>
+            <td >{{user.Nom}}</td>
+            <td >{{user.Prenom}}</td>
+            <td >{{user.telephone}}</td>
+            <td >{{user.email}}</td>
+            
+
+            <td><a href="{{ path("admin_user_edit", {id:user.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-modifier-la-propriété-48.png"></a>
+        </td>
+        </tr>
+        </tbody> 
+
+<div class="btn">
+
 </div>
-{% endblock %}
+
+{% endfor %}
+
+
+{% endblock %} 
