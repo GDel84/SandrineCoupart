@@ -21,7 +21,7 @@ class RegimeController extends AbstractController
             'regimes' => $regimeRepo->findAll(),
         ]);
     }
-        #[Route('/admin/regime/create/{id}', name: 'admin_regime_create')]
+        #[Route('/admin/regime/create/', name: 'admin_regime_create')]
         public function ajoutIngredient(ManagerRegistry $doctrine, Request $request)
         {
             $regime = new Regime;

@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Form\UserClientFormType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -18,10 +22,24 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/moncompte', name: 'moncompte')]
-    public function moncompte(): Response
-    {
+    public function MonCompteUser(ManagerRegistry $doctrine, Request $request, Security $security)
+        {
+            $user = $security->getUser();
+            $form = $this->createForm(UserClientFormType::class, $user);
+    
+            $form->handleRequest($request);
+    
+            if($form->isSubmitted() && $form->isValid()){
+
+                $user = $form->getData();
+                $em = $doctrine->getManager();
+                $em->persist($user);
+                $em->flush();
+    
+            }
         return $this->render('moncompte.html.twig', [
             'moncompte_name' => 'SecurityController',
+            'form' => $form->createView(),
         ]);
     }
 

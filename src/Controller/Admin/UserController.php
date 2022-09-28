@@ -20,7 +20,7 @@ class UserController extends AbstractController
             'users' => $userRepo->findAll(),
         ]);
     }
-    #[Route('/admin/user/create/{id}', name: 'admin_user_create')]
+    #[Route('/admin/user/create/', name: 'admin_user_create')]
         public function ajoutUser(ManagerRegistry $doctrine, Request $request)
         {
             $user = new User;
