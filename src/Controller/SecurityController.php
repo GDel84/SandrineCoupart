@@ -9,7 +9,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    #[Route('/connecter', name: 'app_connecter')]
+    #[Route('/connecter', name: 'connecter')]
     public function connecter(): Response
     {
         return $this->render('connecter.html.twig', [
@@ -17,7 +17,7 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    #[Route('/moncompte', name: 'app_moncompte')]
+    #[Route('/moncompte', name: 'moncompte')]
     public function moncompte(): Response
     {
         return $this->render('moncompte.html.twig', [

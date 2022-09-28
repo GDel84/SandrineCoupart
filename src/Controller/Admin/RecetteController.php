@@ -31,7 +31,7 @@ class RecetteController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/recette/create/{id}', name: 'admin_recette_create')]
+    #[Route('/admin/recette/create/', name: 'admin_recette_create')]
     public function ajoutRecette(ManagerRegistry $doctrine, Request $request, SluggerInterface $slugger)
     {
         $recette = new Recette;

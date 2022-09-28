@@ -7,6 +7,7 @@ use App\Form\RegimeFormType;
 use App\Repository\RegimeRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -60,4 +61,14 @@ class RegimeController extends AbstractController
                 'form' => $form->createView()
             ]);
         }
+
+        #[Route('/admin/regime/delete/{id}', name: 'admin_regime_delete')]
+        public function DeleteRegime(Regime $regime): RedirectResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($regime);
+        $em->flush();
+
+        return $this->redirectToRoute("/admin/regime");
+    }
     }

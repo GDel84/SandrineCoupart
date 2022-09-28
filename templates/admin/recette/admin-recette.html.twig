@@ -4,7 +4,7 @@
 <h1> modifier recette</h1>
 {% for recette in recettes %}
 
-<a href="{{ path("admin_recette_create", {id:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-modifier-la-propriété-48.png"></a>
+<a href="{{ path("admin_recette_create", {id:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-ajouter-48.png"></a>
 
 <div class="deco">
 <table  class="t1 t2">        
@@ -26,6 +26,8 @@
             <td>{{recette.TpsRepos}}</td>
             <td>{{recette.TpsCuisson}}</td>
             <td><a href="{{ path("admin_recette_edit", {id:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-modifier-la-propriété-48.png"></a>
+            <td><a href="{{ path("admin_recette_edit", {id:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-supprimer-48.png"></a>
+
         </td>
         </tr>
         </tbody> 

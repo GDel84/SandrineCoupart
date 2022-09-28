@@ -4,7 +4,7 @@
 <h1> modifier user</h1>
 {% for user in users %}
 
-<a href="{{ path("admin_user_create", {id:user.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-modifier-la-propriété-48.png"></a>
+<a href="{{ path("admin_user_create", {id:user.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-ajouter-48.png"></a>
 
 <div class="deco">
 <table  class="t1 t2">        
@@ -27,6 +27,7 @@
             
 
             <td><a href="{{ path("admin_user_edit", {id:user.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-modifier-la-propriété-48.png"></a>
+            <td><a href="{{ path("admin_user_edit", {id:user.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-supprimer-48.png"></a>
         </td>
         </tr>
         </tbody> 
