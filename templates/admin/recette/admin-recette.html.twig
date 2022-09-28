@@ -32,9 +32,16 @@
         </tr>
         </tbody> 
 
-<div class="btn">
+    {% endfor %}
 
-</div>
+
+{% for etape in etapes %}
+<a href="{{ path("admin_etape_create", {id:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-ajouter-48.png"></a>
+
+
+<td><a href="{{ path("admin_etape_edit", {id:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-modifier-la-propriété-48.png"></a>
+<td><a href="{{ path("admin_etape_edit", {id:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-supprimer-48.png"></a>
+
 
 {% endfor %}
 

@@ -34,6 +34,8 @@ class RegimeController extends AbstractController
                     $em = $doctrine->getManager();
                     $em->persist($regime);
                     $em->flush();
+
+                    return $this->redirectToRoute('admin_regime');
             }
             return $this->render('/admin/regime/admin-regime-create.html.twig', [
                 'form' => $form->createView()
@@ -54,7 +56,7 @@ class RegimeController extends AbstractController
                 $em->persist($regime);
                 $em->flush();
     
-                return $this->redirectToRoute('/admin/regime');
+                return $this->redirectToRoute('admin_regime');
             }
     
             return $this->render('/admin/regime/admin-regime-edit.html.twig', [
@@ -63,12 +65,12 @@ class RegimeController extends AbstractController
         }
 
         #[Route('/admin/regime/delete/{id}', name: 'admin_regime_delete')]
-        public function DeleteRegime(Regime $regime): RedirectResponse
+        public function DeleteRegime(Regime $regime, ManagerRegistry $doctrine): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $em->remove($regime);
         $em->flush();
 
-        return $this->redirectToRoute("/admin/regime");
+        return $this->redirectToRoute("admin_regime");
     }
     }

@@ -9,10 +9,12 @@ use App\Entity\Recette;
 use App\Form\EtapeFormType;
 use App\Form\IngredientRecetteFormType;
 use App\Form\RecetteFormType;
+use App\Repository\EtapeRepository;
 use App\Repository\RecetteRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,10 +31,11 @@ class RecetteController extends AbstractController
     }
 
     #[Route('/admin/recette', name: 'admin_recette')]
-    public function index(RecetteRepository $recetteRepo): Response
+    public function index(RecetteRepository $recetteRepo, EtapeRepository $etapeRepo): Response
     {
         return $this->render('/admin/recette/admin-recette.html.twig', [
             'recettes' => $recetteRepo->findAll(),
+            'etapes' => $etapeRepo->findAll(),
         ]);
     }
 
@@ -72,7 +75,7 @@ class RecetteController extends AbstractController
                 $em->persist($recette);
                 $em->flush();
             }
-            return $this->redirectToRoute('/admin/recette');
+            return $this->redirectToRoute('admin_recette');
         }
         return $this->render('/admin/recette/Admin-recette-create.html.twig', [
             'form' => $form->createView()
@@ -118,11 +121,21 @@ class RecetteController extends AbstractController
             $em->persist($recette);
             $em->flush();
 
-            return $this->redirectToRoute('/admin/recette');
+            return $this->redirectToRoute('admin_recette');
         }
         return $this->render('/admin/recette/admin-recette-edit.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    #[Route('/admin/recette/delete/{id}', name: 'admin_recette_delete')]
+        public function DeleteRecette(Recette $recette, ManagerRegistry $doctrine): RedirectResponse
+    {
+        $em = $doctrine->getManager();
+        $em->remove($recette);
+        $em->flush();
+
+        return $this->redirectToRoute("admin_recette");
     }
 
     #[Route('/admin/recette/ingredient/create/{idrecette}', name: 'admin_recette_ingredient_create')]
@@ -159,7 +172,7 @@ class RecetteController extends AbstractController
                 $em->persist($ingredientRecette);
                 $em->flush();
     
-                return $this->redirectToRoute('/admin/ingredient');
+                return $this->redirectToRoute('admin_recette');
             }
     
             return $this->render('/admin/recette/ingredient/admin-recette-ingredient-edit.html.twig', [
@@ -167,7 +180,17 @@ class RecetteController extends AbstractController
             ]);
         }
 
-        #[Route('/admin/recette/etape/create/{idrecette}', name: 'admin_recette_etape_create')]
+        #[Route('/admin/recette/ingredient/delete/{id}', name: 'admin_ingredient_delete')]
+        public function DeleteRecetteIngredient(IngredientRecette $ingredientRecette, ManagerRegistry $doctrine): RedirectResponse
+        {
+            $em = $doctrine->getManager();
+            $em->remove($ingredientRecette);
+            $em->flush();
+
+            return $this->redirectToRoute("admin_recette");
+        }
+
+        #[Route('/admin/recette/etape/create', name: 'admin_recette_etape_create')]
         public function ajoutEtape(ManagerRegistry $doctrine, Request $request, SluggerInterface $slugger)
         {
             $etape = new Etape;
@@ -201,11 +224,21 @@ class RecetteController extends AbstractController
                 $em->persist($etape);
                 $em->flush();
     
-                return $this->redirectToRoute('/admin/ingredient');
+                return $this->redirectToRoute('admin_recette');
             }
     
             return $this->render('/admin/recette/etape/Admin-recette-etape-edit.html.twig', [
                 'form' => $form->createView()
             ]);
+        }
+
+        #[Route('/admin/recette/etape/delete/{id}', name: 'admin_recette_etape_delete')]
+        public function DeleteEtape(Etape $etape, ManagerRegistry $doctrine): RedirectResponse
+        {
+            $em = $doctrine->getManager();
+            $em->remove($etape);
+            $em->flush();
+            
+            return $this->redirectToRoute("admin_recette");
         }
 }
