@@ -16,6 +16,7 @@
             <th>TpsPrepa</th>
             <th>TpsCuisson</th>
             <th>Modifer</th>
+            <th>Supprimer</th>
             </tr> 
         </thead>
         <tbody> 
@@ -26,7 +27,7 @@
             <td>{{recette.TpsRepos}}</td>
             <td>{{recette.TpsCuisson}}</td>
             <td><a href="{{ path("admin_recette_edit", {id:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-modifier-la-propriété-48.png"></a>
-            <td><a href="{{ path("admin_recette_edit", {id:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-supprimer-48.png"></a>
+            <td><a href="{{ path("admin_recette_delete", {id:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-supprimer-48.png"></a>
 
         </td>
         </tr>
@@ -36,13 +37,68 @@
 
 
 {% for etape in etapes %}
-<a href="{{ path("admin_etape_create", {id:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-ajouter-48.png"></a>
+<a href="{{ path("admin_recette_etape_create", {id:etape.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-ajouter-48.png"></a>
+<thead> 
+
+            <th >Oredres</th>
+            <th>Instruction</th>
+            <th>Recettes</th>
+            <th>Modifer</th>
+            <th>Supprimer</th>
+            </tr> 
+        </thead>
+        <tbody> 
+        <tr>
+
+<td><a href="{{ path("admin_recette_etape_edit", {id:etape.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-modifier-la-propriété-48.png"></a>
+<td><a href="{{ path("admin_recette_etape_delete", {id:etape.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-supprimer-48.png"></a>
+</tr>
+        </tbody> 
+
+{% endfor %}
+
+{% for ingredientrecette in ingredientrecettes %}
+<a href="{{ path("admin_recette_ingredient_create", {id:ingredientrecette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-ajouter-48.png"></a>
 
 
-<td><a href="{{ path("admin_etape_edit", {id:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-modifier-la-propriété-48.png"></a>
-<td><a href="{{ path("admin_etape_edit", {id:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-supprimer-48.png"></a>
+<td><a href="{{ path("admin_recette_ingredient_edit", {id:ingredientrecette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-modifier-la-propriété-48.png"></a>
+<td><a href="{{ path("admin_recette_ingredient_delete", {id:ingredientrecette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-supprimer-48.png"></a>
 
 
+{% endfor %}
+{% for recette in recettes %}
+
+<div class="carte">
+
+        <div class="divImg"></div>
+
+        <div class="titre">
+            {{recette.title}}
+            <hr>
+        </div>
+
+        <div class="tab">
+            <img src="/photo/sablier.svg" alt="sablier" class="icone">
+            <span>{{recette.TpsPrepa}}</span>
+        </div>
+        <div class="tab">
+            <img src="/photo/liste.svg" alt="ingredients" class="icone">
+            <span>8</span>
+        </div>
+        <div class="tab">
+            <img src="/photo/user.svg" alt="user" class="icone">
+            <span>5</span>
+        </div>
+
+        <div class="info">
+            {{recette.Description}}
+        </div>
+
+        <div class="btnSection">
+            <a href="#">La recette</a>
+        </div>
+
+    </div>
 {% endfor %}
 
 
