@@ -10,6 +10,7 @@ use App\Form\EtapeFormType;
 use App\Form\IngredientRecetteFormType;
 use App\Form\RecetteFormType;
 use App\Repository\EtapeRepository;
+use App\Repository\IngredientRecetteRepository;
 use App\Repository\RecetteRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,11 +32,12 @@ class RecetteController extends AbstractController
     }
 
     #[Route('/admin/recette', name: 'admin_recette')]
-    public function index(RecetteRepository $recetteRepo, EtapeRepository $etapeRepo): Response
+    public function index(RecetteRepository $recetteRepo, EtapeRepository $etapeRepo, IngredientRecetteRepository $ingredientrecetteRepo): Response
     {
         return $this->render('/admin/recette/admin-recette.html.twig', [
             'recettes' => $recetteRepo->findAll(),
             'etapes' => $etapeRepo->findAll(),
+            'ingredientrecettes' => $ingredientrecetteRepo->findAll(),
         ]);
     }
 
@@ -180,7 +182,7 @@ class RecetteController extends AbstractController
             ]);
         }
 
-        #[Route('/admin/recette/ingredient/delete/{id}', name: 'admin_ingredient_delete')]
+        #[Route('/admin/recette/ingredient/delete/{id}', name: 'admin_recette_ingredient_delete')]
         public function DeleteRecetteIngredient(IngredientRecette $ingredientRecette, ManagerRegistry $doctrine): RedirectResponse
         {
             $em = $doctrine->getManager();
@@ -204,6 +206,9 @@ class RecetteController extends AbstractController
                     $em = $doctrine->getManager();
                     $em->persist($etape);
                     $em->flush();
+
+                return $this->redirectToRoute('admin_recette');
+
             }
             return $this->render('/admin/recette/etape/Admin-recette-etape-create.html.twig', [
                 'form' => $form->createView()

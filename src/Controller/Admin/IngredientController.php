@@ -7,6 +7,7 @@ use App\Form\IngredientFormType;
 use App\Repository\IngredientRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -62,5 +63,15 @@ class IngredientController extends AbstractController
                 'form' => $form->createView()
             ]);
         }
-    }
+
+        #[Route('/admin/ingredient/delete/{id}', name: 'admin_ingredient_delete')]
+        public function DeleteIngredient(Ingredient $ingredient, ManagerRegistry $doctrine): RedirectResponse
+        {
+            $em = $doctrine->getManager();
+            $em->remove($ingredient);
+            $em->flush();
+
+        return $this->redirectToRoute("admin_ingredient");
+        }
+}
     

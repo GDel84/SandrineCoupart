@@ -7,6 +7,7 @@ use App\Form\UserFormType;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,5 +60,15 @@ class UserController extends AbstractController
             return $this->render('/admin/user/admin-user-edit.html.twig', [
                 'form' => $form->createView()
             ]);
+        }
+
+        #[Route('/admin/user/delete/{id}', name: 'admin_user_delete')]
+        public function DeleteUser(User $user, ManagerRegistry $doctrine): RedirectResponse
+        {
+            $em = $doctrine->getManager();
+            $em->remove($user);
+            $em->flush();
+
+        return $this->redirectToRoute("admin_user");
         }
 }
