@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Recette;
+use App\Repository\RecetteRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class PublicController extends AbstractController
 {
@@ -17,10 +21,22 @@ class PublicController extends AbstractController
     }
 
     #[Route('/recette', name: 'recette')]
-    public function recette(): Response
+    public function recette(ManagerRegistry $doctrine, Security $security, RecetteRepository $recetteRepo): Response
     {
+        /**
+        * @var RecetteRepository
+        */
+        $repoRecette = $doctrine->getRepository(Recette::class);
+        if($security->getUser()){
+            $listeRecette = $repoRecette->recettesPatients($security->getUser());
+        }else{
+            $listeRecette = $repoRecette->recettesPubliques();
+        }
+        
         return $this->render('recette.html.twig', [
             'recette_name' => 'PublicController',
+            'listeRecette' => $listeRecette,
+            'recettes' => $recetteRepo->findAll()
         ]);
     }
 

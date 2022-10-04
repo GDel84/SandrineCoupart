@@ -14,7 +14,6 @@ class IngredientFormType extends AbstractType
         $builder
             ->add('Libeller')
             ->add('Allergene')
-            ->add('recettes')
             ->add('users')
         ;
     }

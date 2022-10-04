@@ -21,7 +21,7 @@ class UserController extends AbstractController
             'users' => $userRepo->findAll(),
         ]);
     }
-    #[Route('/admin/user/create/', name: 'admin_user_create')]
+    #[Route('/admin/user/create', name: 'admin_user_create')]
         public function ajoutUser(ManagerRegistry $doctrine, Request $request)
         {
             $user = new User;
@@ -31,9 +31,11 @@ class UserController extends AbstractController
     
             if($form->isSubmitted() && $form->isValid()){
     
-                    $em = $doctrine->getManager();
-                    $em->persist($user);
-                    $em->flush();
+                $em = $doctrine->getManager();
+                $em->persist($user);
+                $em->flush();
+
+                return $this->redirectToRoute('admin_user');
             }
             return $this->render('/admin/user/admin-user-create.html.twig', [
                 'form' => $form->createView()
@@ -54,7 +56,7 @@ class UserController extends AbstractController
                 $em->persist($user);
                 $em->flush();
     
-                return $this->redirectToRoute('/admin/user');
+                return $this->redirectToRoute('admin_user');
             }
     
             return $this->render('/admin/user/admin-user-edit.html.twig', [

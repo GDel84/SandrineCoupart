@@ -19,21 +19,19 @@ class Ingredient
     private ?string $Libeller = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $Allergene = null;
-
-    #[ORM\ManyToMany(targetEntity: Recette::class, mappedBy: 'IdIngredients')]
-    private Collection $recettes;
+    private ?bool $Allergene = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'IdIngredient')]
     private Collection $users;
 
-    #[ORM\ManyToOne(inversedBy: 'IdIngredient')]
-    private ?IngredientRecette $ingredientRecette = null;
+    #[ORM\OneToMany(mappedBy: 'Ingredient', targetEntity: IngredientRecette::class, orphanRemoval: true)]
+    private Collection $ingredientRecettes;
 
     public function __construct()
     {
         $this->recettes = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->ingredientRecettes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -53,44 +51,25 @@ class Ingredient
         return $this;
     }
 
-    public function getAllergene(): ?int
+    public function getAllergene(): ?bool
     {
         return $this->Allergene;
     }
 
-    public function setAllergene(?int $Allergene): self
+    public function setAllergene(?bool $Allergene): self
     {
         $this->Allergene = $Allergene;
 
         return $this;
     }
-
-    /**
-     * @return Collection<int, Recette>
-     */
-    public function getRecettes(): Collection
+    public function isAllergene(?bool $Allergene)
     {
-        return $this->recettes;
-    }
-
-    public function addRecette(Recette $recette): self
-    {
-        if (!$this->recettes->contains($recette)) {
-            $this->recettes->add($recette);
-            $recette->addIdIngredient($this);
+        if($this->getAllergene()===true){
+            return true;
         }
-
-        return $this;
+        return false;
     }
 
-    public function removeRecette(Recette $recette): self
-    {
-        if ($this->recettes->removeElement($recette)) {
-            $recette->removeIdIngredient($this);
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, User>
@@ -132,6 +111,36 @@ class Ingredient
     public function setIngredientRecette(?IngredientRecette $ingredientRecette): self
     {
         $this->ingredientRecette = $ingredientRecette;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, IngredientRecette>
+     */
+    public function getIngredientRecettes(): Collection
+    {
+        return $this->ingredientRecettes;
+    }
+
+    public function addIngredientRecette(IngredientRecette $ingredientRecette): self
+    {
+        if (!$this->ingredientRecettes->contains($ingredientRecette)) {
+            $this->ingredientRecettes->add($ingredientRecette);
+            $ingredientRecette->setIngredient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIngredientRecette(IngredientRecette $ingredientRecette): self
+    {
+        if ($this->ingredientRecettes->removeElement($ingredientRecette)) {
+            // set the owning side to null (unless already changed)
+            if ($ingredientRecette->getIngredient() === $this) {
+                $ingredientRecette->setIngredient(null);
+            }
+        }
 
         return $this;
     }

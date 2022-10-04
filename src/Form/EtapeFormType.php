@@ -14,7 +14,6 @@ class EtapeFormType extends AbstractType
         $builder
             ->add('Ordres')
             ->add('Instrcution')
-            ->add('recettes')
         ;
     }
 

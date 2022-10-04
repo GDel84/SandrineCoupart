@@ -37,21 +37,21 @@ class Recette
     #[ORM\ManyToMany(targetEntity: Regime::class, inversedBy: 'recettes')]
     private Collection $IdRegime;
 
-    #[ORM\ManyToMany(targetEntity: Etape::class, inversedBy: 'recettes')]
-    private Collection $IdEtape;
+    #[ORM\OneToMany(mappedBy: 'Recette', targetEntity: IngredientRecette::class, orphanRemoval: true)]
+    private Collection $ingredientRecettes;
 
-    #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'recettes')]
-    private Collection $IdIngredients;
+    #[ORM\OneToMany(mappedBy: 'recette', targetEntity: Etape::class)]
+    private Collection $Etapes;
 
-    #[ORM\ManyToOne(inversedBy: 'IdRecette')]
-    private ?IngredientRecette $ingredientRecette = null;
+    #[ORM\Column(nullable: true)]
+    private ?bool $RecettePublic = null;
 
 
     public function __construct()
     {
         $this->IdRegime = new ArrayCollection();
-        $this->IdEtape = new ArrayCollection();
-        $this->IdIngredients = new ArrayCollection();
+        $this->ingredientRecettes = new ArrayCollection();
+        $this->Etapes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -155,54 +155,6 @@ class Recette
         return $this;
     }
 
-    /**
-     * @return Collection<int, Etape>
-     */
-    public function getIdEtape(): Collection
-    {
-        return $this->IdEtape;
-    }
-
-    public function addIdEtape(Etape $idEtape): self
-    {
-        if (!$this->IdEtape->contains($idEtape)) {
-            $this->IdEtape->add($idEtape);
-        }
-
-        return $this;
-    }
-
-    public function removeIdEtape(Etape $idEtape): self
-    {
-        $this->IdEtape->removeElement($idEtape);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Ingredient>
-     */
-    public function getIdIngredients(): Collection
-    {
-        return $this->IdIngredients;
-    }
-
-    public function addIdIngredient(Ingredient $idIngredient): self
-    {
-        if (!$this->IdIngredients->contains($idIngredient)) {
-            $this->IdIngredients->add($idIngredient);
-        }
-
-        return $this;
-    }
-
-    public function removeIdIngredient(Ingredient $idIngredient): self
-    {
-        $this->IdIngredients->removeElement($idIngredient);
-
-        return $this;
-    }
-
     public function __toString()
     {
         return $this->getTitle();
@@ -216,6 +168,78 @@ class Recette
     public function setIngredientRecette(?IngredientRecette $ingredientRecette): self
     {
         $this->ingredientRecette = $ingredientRecette;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, IngredientRecette>
+     */
+    public function getIngredientRecettes(): Collection
+    {
+        return $this->ingredientRecettes;
+    }
+
+    public function addIngredientRecette(IngredientRecette $ingredientRecette): self
+    {
+        if (!$this->ingredientRecettes->contains($ingredientRecette)) {
+            $this->ingredientRecettes->add($ingredientRecette);
+            $ingredientRecette->setRecette($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIngredientRecette(IngredientRecette $ingredientRecette): self
+    {
+        if ($this->ingredientRecettes->removeElement($ingredientRecette)) {
+            // set the owning side to null (unless already changed)
+            if ($ingredientRecette->getRecette() === $this) {
+                $ingredientRecette->setRecette(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Etape>
+     */
+    public function getEtapes(): Collection
+    {
+        return $this->Etapes;
+    }
+
+    public function addEtape(Etape $etape): self
+    {
+        if (!$this->Etapes->contains($etape)) {
+            $this->Etapes->add($etape);
+            $etape->setRecette($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEtape(Etape $etape): self
+    {
+        if ($this->Etapes->removeElement($etape)) {
+            // set the owning side to null (unless already changed)
+            if ($etape->getRecette() === $this) {
+                $etape->setRecette(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isRecettePublic(): ?bool
+    {
+        return $this->RecettePublic;
+    }
+
+    public function setRecettePublic(?bool $RecettePublic): self
+    {
+        $this->RecettePublic = $RecettePublic;
 
         return $this;
     }

@@ -16,16 +16,18 @@ class IngredientRecette
     private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $quantité = null;
+    private ?int $quantite = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $Unité = null;
+    private ?string $Unite = null;
 
-    #[ORM\OneToMany(mappedBy: 'ingredientRecette', targetEntity: recette::class)]
-    private Collection $IdRecette;
+    #[ORM\ManyToOne(inversedBy: 'ingredientRecettes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Ingredient $Ingredient = null;
 
-    #[ORM\OneToMany(mappedBy: 'ingredientRecette', targetEntity: ingredient::class)]
-    private Collection $IdIngredient;
+    #[ORM\ManyToOne(inversedBy: 'ingredientRecettes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Recette $Recette = null;
 
     public function __construct()
     {
@@ -38,86 +40,50 @@ class IngredientRecette
         return $this->id;
     }
 
-    public function getQuantité(): ?int
+    public function getQuantite(): ?int
     {
-        return $this->quantité;
+        return $this->quantite;
     }
 
-    public function setQuantité(?int $quantité): self
+    public function setQuantite(?int $quantite): self
     {
-        $this->quantité = $quantité;
+        $this->quantite = $quantite;
 
         return $this;
     }
 
-    public function getUnité(): ?int
+    public function getUnite(): ?string
     {
-        return $this->Unité;
+        return $this->Unite;
     }
 
-    public function setUnité(?int $Unité): self
+    public function setUnite(?string $Unite): self
     {
-        $this->Unité = $Unité;
+        $this->Unite = $Unite;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, recette>
-     */
-    public function getIdRecette(): Collection
+    public function getIngredient(): ?Ingredient
     {
-        return $this->IdRecette;
+        return $this->Ingredient;
     }
 
-    public function addIdRecette(recette $idRecette): self
+    public function setIngredient(?Ingredient $Ingredient): self
     {
-        if (!$this->IdRecette->contains($idRecette)) {
-            $this->IdRecette->add($idRecette);
-            $idRecette->setIngredientRecette($this);
-        }
+        $this->Ingredient = $Ingredient;
 
         return $this;
     }
 
-    public function removeIdRecette(recette $idRecette): self
+    public function getRecette(): ?Recette
     {
-        if ($this->IdRecette->removeElement($idRecette)) {
-            // set the owning side to null (unless already changed)
-            if ($idRecette->getIngredientRecette() === $this) {
-                $idRecette->setIngredientRecette(null);
-            }
-        }
-
-        return $this;
+        return $this->Recette;
     }
 
-    /**
-     * @return Collection<int, ingredient>
-     */
-    public function getIdIngredient(): Collection
+    public function setRecette(?Recette $Recette): self
     {
-        return $this->IdIngredient;
-    }
-
-    public function addIdIngredient(ingredient $idIngredient): self
-    {
-        if (!$this->IdIngredient->contains($idIngredient)) {
-            $this->IdIngredient->add($idIngredient);
-            $idIngredient->setIngredientRecette($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIdIngredient(ingredient $idIngredient): self
-    {
-        if ($this->IdIngredient->removeElement($idIngredient)) {
-            // set the owning side to null (unless already changed)
-            if ($idIngredient->getIngredientRecette() === $this) {
-                $idIngredient->setIngredientRecette(null);
-            }
-        }
+        $this->Recette = $Recette;
 
         return $this;
     }

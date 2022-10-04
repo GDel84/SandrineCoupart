@@ -17,7 +17,6 @@ class UserClientFormType extends AbstractType
             ->add('Prenom')
             ->add('telephone')
             ->add('email', EmailType::class)
-            ->add('password')
             ->add('IdRegime')
             ->add('IdIngredient')
         ;

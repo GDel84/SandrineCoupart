@@ -39,6 +39,36 @@ class RecetteRepository extends ServiceEntityRepository
         }
     }
 
+
+    public function recettesPatients($User){
+        $tableauIdIngredients = array();
+        foreach($User->getIdIngredient() as $ingredient ){
+            $tableauIdIngredients[] = $ingredient->getId();
+        }
+        $tableauIdRegime = array();
+        foreach($User->getIdRegime() as $regime){
+            $tableauIdRegime[] = $regime->getId();
+        }
+        $qb = $this->createQueryBuilder('r');
+        return $qb
+            ->join('r.ingredientRecettes', 'ir')
+            ->join('r.IdRegime', 'rr')
+            ->andWhere($qb->expr()->notIn('ir.Ingredient', $tableauIdIngredients))
+            ->andWhere($qb->expr()->in('rr.id', $tableauIdRegime))
+            ->groupBy('r.id')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function recettesPubliques(){
+        $qb = $this->createQueryBuilder('r');
+        return $qb
+                ->andWhere('r.RecettePublic = TRUE')
+                ->orderBy('r.Title')
+                ->getQuery()
+                ->getResult();
+    }
+
 //    /**
 //     * @return Recette[] Returns an array of Recette objects
 //     */

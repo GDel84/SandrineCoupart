@@ -44,8 +44,7 @@ class RecetteFormType extends AbstractType
             ->add('TpsRepos')
             ->add('TpsCuisson')
             ->add('IdRegime')
-            ->add('IdEtape')
-            ->add('IdIngredients')
+            ->add('RecettePublic')
         ;
     }
 

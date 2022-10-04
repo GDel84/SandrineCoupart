@@ -25,6 +25,9 @@ class Etape
     #[ORM\ManyToMany(targetEntity: Recette::class, mappedBy: 'IdEtape')]
     private Collection $recettes;
 
+    #[ORM\ManyToOne(inversedBy: 'Etapes')]
+    private ?Recette $recette = null;
+
     public function __construct()
     {
         $this->recettes = new ArrayCollection();
@@ -67,26 +70,20 @@ class Etape
         return $this->recettes;
     }
 
-    public function addRecette(Recette $recette): self
-    {
-        if (!$this->recettes->contains($recette)) {
-            $this->recettes->add($recette);
-            $recette->addIdEtape($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRecette(Recette $recette): self
-    {
-        if ($this->recettes->removeElement($recette)) {
-            $recette->removeIdEtape($this);
-        }
-
-        return $this;
-    }
     public function __toString()
     {
         return $this->getOrdres();
+    }
+
+    public function getRecette(): ?Recette
+    {
+        return $this->recette;
+    }
+
+    public function setRecette(?Recette $recette): self
+    {
+        $this->recette = $recette;
+
+        return $this;
     }
 }
