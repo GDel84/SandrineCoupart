@@ -3,18 +3,40 @@
 {% block title %}Hello ReccetteController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+{% for recette in recettes %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/SandrineCoupart/src/Controller/ReccetteController.php'|file_link(0) }}">src/Controller/ReccetteController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/SandrineCoupart/templates/reccette/index.html.twig'|file_link(0) }}">templates/reccette/index.html.twig</a></code></li>
-    </ul>
-</div>
-{% endblock %}
+    <div class="carte">
+
+        <div class="divImg"></div>
+
+        <div class="titre">
+            <hr>
+            {{recette.title}}
+        </div>
+
+        <div class="tab">
+            <img src="/photo/sablier.svg" alt="sablier" class="icone">
+            <span>{{recette.TpsPrepa|date("H:i", false)}}</span>
+        </div>
+        <div class="tab">
+            <img src="/photo/liste.svg" alt="ingredients" class="icone">
+            <span>8</span>
+        </div>
+        <div class="tab">
+            <img src="/photo/user.svg" alt="user" class="icone">
+            <span>5</span>
+        </div>
+
+        <div class="info">
+        {{recette.Description}}
+        </div>
+
+        <div class="btnSection">
+            <a href="#">La recette</a>
+        </div>
+
+    </div>
+{% endfor %}
+
+{% endblock %} 

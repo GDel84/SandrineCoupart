@@ -1,13 +1,18 @@
 {% extends '/admin/baseadmin.html.twig' %}
 
 {% block body %}
-<h1> modifier user</h1>
-{% for user in users %}
 
-<a href="{{ path("admin_user_create", {id:user.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-ajouter-48.png"></a>
+<h1> modifier user</h1>
+
+
 
 <div class="deco">
-<table  class="t1 t2">        
+<table  class="t1 t2">  
+    <a href="{{ path("admin_user_create" ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-ajouter-48.png"></a>
+
+         <div class="deco">
+    <h1>Les Passiants</h1>
+<table id='tab' class="table table-striped-columns">   
         <thead> 
             <tr>
             <th >Nom</th>
@@ -19,24 +24,25 @@
             </tr> 
         </thead>
         <tbody> 
+        {% for user in users %}
+
         <tr>
             <td >{{user.Nom}}</td>
             <td >{{user.Prenom}}</td>
             <td >{{user.telephone}}</td>
             <td >{{user.email}}</td>
-            
-
-            <td><a href="{{ path("admin_user_edit", {id:user.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-modifier-la-propriété-48.png"></a>
-            <td><a href="{{ path("admin_user_edit", {id:user.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-supprimer-48.png"></a>
-        </td>
+            <td><a href="{{ path("admin_user_edit", {id:user.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-modifier-la-propriété-48.png"></a></td>
+            <td><a href="{{ path("admin_user_delete", {id:user.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-supprimer-48.png"></a></td>
+        {% endfor %}
         </tr>
         </tbody> 
+
 
 <div class="btn">
 
 </div>
 
-{% endfor %}
+
 
 
 {% endblock %} 

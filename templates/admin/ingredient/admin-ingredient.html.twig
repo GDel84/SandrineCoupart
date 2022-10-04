@@ -2,9 +2,8 @@
 
 {% block body %}
 <h1> Les ingredients</h1>
-{% for ingredient in ingredients %}
 
-<a href="{{ path("admin_ingredient_create", {id:ingredient.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-ajouter-48.png"></a>
+<a href="{{ path("admin_ingredient_create" ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-ajouter-48.png"></a>
 
 <div class="deco">
 <table  class="t1 t2">        
@@ -17,6 +16,7 @@
             </tr> 
         </thead>
         <tbody> 
+        {% for ingredient in ingredients %}
         <tr>
             <td >{{ingredient.Libeller}}</td>
             <td >{{ingredient.Allergene}}</td>
@@ -25,13 +25,14 @@
 
         </td>
         </tr>
+        {% endfor %}
         </tbody> 
 
 <div class="btn">
 
 </div>
 
-{% endfor %}
+
 
 {% endblock %} 
 

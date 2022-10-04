@@ -6,7 +6,9 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
+          {{ encore_entry_link_tags('app') }}
+            <link rel="stylesheet" href="{{ asset('css/style.css')}}">
+
         {% endblock %}
 
         {% block javascripts %}
@@ -14,29 +16,32 @@
         {% endblock %}
     </head>
     <body>
-    <div class="main-navlinks">
-        <div class="navlinks-container">
-          <a href="" aria-current="page">Accueil</a>
-          <a href= "">Recette</a>
-          <a href="">mention legale</a>
-          <a href="">contact</a>
-          {% if app.user %}
+
+    <nav class="navbar">
+      <a href="#" class="logo"> ADVENTURE</a>
+      <div class="nav-links">
+        <ul>
+            <li class="active"><a href="#">Accueil</a></li>
+            <li><a href="{{path('recette')}}">Recette</a></li>
+            <li><a href="#">Mention Legale</a></li>
+            <li><a href="#">Nous contacter</a></li>
+            {% if app.user %}
         <div>
-        <li class="menu-deroulant">
+        <li>
           <a>Mon profil</a>
-            <ul class="sous-menu">
-               <li><a class="sous-menu-cache" href="{{ path('app_user') }}">Mon profil</a></li>
-               <li><a class="sous-menu-cache" href="{{ path('app_logout') }}">Déconnexion</a></li>
+            <ul>
+              <li><a href="{{ path('app_user') }}">Mon profil</a></li>
+              <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
             </ul>
         </li>
         </div>
       {% else %}
           <div>
-          <li class="menu-deroulant">
+          <li>
           <a>Se connecter</a>
-          <ul class="sous-menu">
-                <li><a class="sous-menu-cache"  href="{{ path('app_login') }}">Se connecter</a></li>
-              </ul>
+          <ul>
+            <li><a class="sous-menu-cache"  href="{{ path('app_login') }}">Se connecter</a></li>
+          </ul>
              
           </div>
     {% endif %}
@@ -46,8 +51,16 @@
 
       <a href="{{ path('admin_accueil') }}">Section Admin</a>
     {% endif %}
-    
+        </ul>
+      </div>
+      <img src="" atl"menu hamburger" class="menu-hamburger">
+    </nav>
   
-        {% block body %}{% endblock %}
+        {% block body %}
+        
+
+        
+        
+        {% endblock %}
     </body>
 </html>

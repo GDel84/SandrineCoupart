@@ -10,9 +10,72 @@
 
             {{ form_start(form) }}
             {{ form_widget(form) }}
-                <button type="submit" class="btn-form">Ajouter</button>
+                <button type="submit" class="btn-form">Modifier</button>
             {{ form_end(form) }}
         </div>
     </div>
+
+
+<div class="deco">
+    <h1>Les etapes</h1>
+<table id='tab' class="table table-striped-columns">   
+        <thead> 
+            <th >Ordres</th>
+            <th>Instruction</th>
+            <th>Modifer</th>
+            <th>Supprimer</th>
+            </tr> 
+        </thead>
+        <tbody> 
+<a href="{{ path("admin_recette_etape_create", {idrecette:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="/photo/icons8-ajouter-48.png"></a>
+
+        
+
+    {% for etape in recette.Etapes %}
+        <tr>
+            <td >{{etape.Ordres}}</td>
+            <td >{{etape.Instrcution}}</td>        
+<td><a href="{{ path("admin_recette_etape_edit", {id:etape.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="/photo/icons8-modifier-la-propriété-48.png"></a></td>  
+<td><a href="{{ path("admin_recette_etape_delete", {id:etape.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="/photo/icons8-supprimer-48.png"></a></td>  
+</tr>
+
+{% endfor %}
+         
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="deco">
+    <h1>Les Ingredients</h1>
+<table id='tab' class="table table-striped-columns">   
+        <thead> 
+            <th>Ingredient</th>
+            <th>quantite</th>
+            <th>Unite</th>
+            <th>Modifer</th>
+            <th>Supprimer</th>
+            </tr> 
+        </thead>
+        <tbody> 
+
+<a href="{{ path("admin_recette_ingredient_create", {idrecette:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="/photo/icons8-ajouter-48.png"></a>
+
+{% for ingredientrecette in recette.ingredientRecettes %}
+        <tr>
+            <td >{{ingredientrecette.Ingredient}}</td>
+            <td >{{ingredientrecette.quantite}}</td>
+            <td >{{ingredientrecette.Unite}}</td>
+<td><a href="{{ path("admin_recette_ingredient_edit", {id:ingredientrecette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="/photo/icons8-modifier-la-propriété-48.png"></a></td>
+<td><a href="{{ path("admin_recette_ingredient_delete", {id:ingredientrecette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="/photo/icons8-supprimer-48.png"></a></td>
+            </tr>
+{% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+
+
+
 
 {% endblock %} 
