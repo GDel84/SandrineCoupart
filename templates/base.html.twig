@@ -7,8 +7,6 @@
         {% block stylesheets %}
           {{ encore_entry_link_tags('app') }}
             <link rel="stylesheet" href="{{ asset('css/style.css')}}">
-            
-
         {% endblock %}
 
         {% block javascripts %}
@@ -17,60 +15,24 @@
     </head>
 
     <body>
+    
     <nav class="navMenu">
       <a href="#">Home</a>
-      <a href="#">Blog</a>
+      <a href="{{path('recette')}}">Recette</a>
       <a href="#">Work</a>
       <a href="#">About</a>
+      {% if app.user %}
+      <a href="{{ path('app_user') }}">Mon profil</a>
+      <a href="{{ path('app_logout') }}">Déconnexion</a>
+      {% else %}
+      <a  href="{{ path('app_login') }}">connection</a>
+      {% endif %}
+      {% if is_granted('ROLE_ADMIN') %}
+      <a href="{{ path('admin_accueil') }}">Section Admin</a>
+      {% endif %}
       <div class="dot"></div>
     </nav>
-
-
-    <nav class="navbar">
-      <a href="#" class="logo"> ADVENTURE</a>
-      <div class="nav-links">
-        <ul>
-            <li class="active"><a href="#">Accueil</a></li>
-            <li><a href="{{path('recette')}}">Recette</a></li>
-            <li><a href="#">Mention Legale</a></li>
-            <li><a href="#">Nous contacter</a></li>
-            {% if app.user %}
-        <div>
-        <li>
-          <a>Mon profil</a>
-            <ul>
-              <li><a href="{{ path('app_user') }}">Mon profil</a></li>
-              <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
-            </ul>
-        </li>
-        </div>
-      {% else %}
-          <div>
-          <li>
-          <a>Se connecter</a>
-          <ul>
-            <li><a class="sous-menu-cache"  href="{{ path('app_login') }}">Se connecter</a></li>
-          </ul>
-             
-          </div>
-    {% endif %}
-        </div>
-    </div>
-
-    {% if is_granted('ROLE_ADMIN') %}
-
-      <a href="{{ path('admin_accueil') }}">Section Admin</a>
-    {% endif %}
-        </ul>
-      </div>
-      <img src="" atl="menu hamburger" class="menu-hamburger">
-    </nav>
   
-        {% block body %}
-        
-
-        
-        
-        {% endblock %}
+        {% block body %}{% endblock %}
     </body>
 </html>

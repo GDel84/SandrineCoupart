@@ -15,10 +15,7 @@ body{
   min-height: 100vh;
   overflow-x: hidden;
 }
-.container{
-  position: absolute;
-  width: 100%;
-}
+
 .navigation{
   position: fixed;
   width: 300px;
@@ -143,6 +140,7 @@ body{
 /*-------accueil----------*/
 h1{
   display: flex;
+  text-align: center;
 }
 .test{
   font-size: 80px;

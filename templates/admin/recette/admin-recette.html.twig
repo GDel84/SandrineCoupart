@@ -1,5 +1,4 @@
 {% extends '/admin/baseadmin.html.twig' %}
-
 {% block body %}
 <h1>administer recette</h1>
 
@@ -9,31 +8,29 @@
 <table  class="t1 t2">        
         <thead> 
             <tr>
-            <th >Title</th>
-            <th>description</th>
-            <th>TpsPrepa</th>
-            <th>TpsPrepa</th>
-            <th>TpsCuisson</th>
-            <th>Modifer</th>
-            <th>Supprimer</th>
+                <th>Title</th>
+                <th>description</th>
+                <th>TpsPrepa</th>
+                <th>TpsPrepa</th>
+                <th>TpsCuisson</th>
+                <th>Modifer</th>
+                <th>Supprimer</th>
             </tr> 
         </thead>
         <tbody> 
-        {% for recette in recettes %}
-        <tr>
-            <td >{{recette.title}}</td>
-            <td>{{recette.Description}}</td>
-            <td>{{recette.TpsPrepa|date("H:i", false)}}</td>
-            <td>{{recette.TpsRepos|date("H:i", false)}}</td>
-            <td>{{recette.TpsCuisson|date("H:i", false)}}</td>
-            <td><a href="{{ path("admin_recette_edit", {id:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-modifier-la-propriété-48.png"></a>
-            <td><a href="{{ path("admin_recette_delete", {id:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-supprimer-48.png"></a>
-        </td>
-        </tr>
+    {% for recette in recettes %}
+            <tr>
+                <td>{{recette.title}}</td>
+                <td>{{recette.Description}}</td>
+                <td>{{recette.TpsPrepa|date("H:i", false)}}</td>
+                <td>{{recette.TpsRepos|date("H:i", false)}}</td>
+                <td>{{recette.TpsCuisson|date("H:i", false)}}</td>
+                <td><a href="{{ path("admin_recette_edit", {id:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-modifier-la-propriété-48.png"></a></td>
+                <td><a href="{{ path("admin_recette_delete", {id:recette.id} ) }}" type="button" class="btn btn-outline-primary"> <img src="../photo/icons8-supprimer-48.png"></a></td>
+            </tr>
         </tbody> 
-
+</table>
+</div>
 
     {% endfor %}
-        
-
 {% endblock %} 
