@@ -166,3 +166,18 @@ span {
     color: #e2e2e2;
     border-radius: 5px;
 }
+
+h1{
+  color: #f1f1f1;
+  text-align: center;
+  margin-top:12%;
+}
+.login{
+  margin-top:2%;
+  margin-inline: 35%;
+  color:#f1f1f1;
+  text-align: center;
+}
+input{
+  margin-bottom: 5%;
+}
